@@ -6,6 +6,7 @@ import { useState, useEffect, use } from "react";
 export default function Home() {
   const router = useRouter();
   const [user, setUser] = useState<{ email?: string } | null>(null);
+  const [checkForOTP, setCheckForOTP] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
@@ -50,6 +51,7 @@ export default function Home() {
       setResponseMessage(error.message || "An unexpected error occurred.");
     } finally {
       setLoading(false);
+      setCheckForOTP(true);
     }
   }
 
@@ -61,7 +63,7 @@ export default function Home() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "50px" }}>
-      {!loading && !user && (
+      {!checkForOTP && !user && (
         <div style={{
           display: "flex",
           flexDirection: "column",
@@ -70,29 +72,27 @@ export default function Home() {
             type="email"
             placeholder="Enter your email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
+            onChange={(e) => setEmail(e.target.value)}
             style={{ marginBottom: "10px", padding: "8px", width: "300px" }}
           />
           <button onClick={HandleSubmit} disabled={loading} style={{ padding: "8px 16px" }}>
-            {loading ? "Sending..." : "Send Magic Link"}
+            {loading ? "Please Wait..." : "Login"}
           </button>
           {responseMessage && <p>{responseMessage}</p>}
         </div>
       )}
 
-      {loading && <p>Loading...</p>}
-
-      {!loading && user && (
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-        }}>
-          <h2>Welcome, {user.email}</h2>
-          <button style={{ padding: "8px 16px" }} onClick={HandleLogout}>
-            Logout
-          </button>
+      {checkForOTP && !user && (
+        <div>
+          Please Check Your Email for the OTP
         </div>
+      )}
+
+      {user && (
+        <button onClick={HandleLogout} style={{ padding: "8px 16px" }}>
+          Logout
+        </button>
       )}
     </div>
   );
