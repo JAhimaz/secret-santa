@@ -1,12 +1,16 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import { createClient } from "./lib/supabase/server";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to Secret Santa!</h1>
-      </main>
-    </div>
-  );
+export default async function Home() {
+  const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (user) {
+    redirect("/groups");
+  }
+
+  redirect("/login");
 }

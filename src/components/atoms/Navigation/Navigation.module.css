@@ -1,0 +1,6 @@
+.navigation {
+  height: var(--navigation-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
