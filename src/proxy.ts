@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 import { createClient } from "./app/lib/supabase/server"
 
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Public routes that should NOT redirect
