@@ -1,6 +1,47 @@
 .navigation {
   height: var(--navigation-height);
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+}
+
+.leftItem, .rightItem {
+  color: var(--text-alt);
+}
+
+.leftItem {
+  margin-right: auto;
+}
+
+.rightItem {
+  margin-left: auto;
+}
+
+.navItem {
+  box-sizing: border-box;
+  color: var(--text-alt);
+  padding: 10px 15px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.active {
+  border: 1px solid var(--text);
+  color: var(--text);
+}
+
+.navItem:hover {
+  color: var(--text-alt);
+  border: 1px solid var(--text-alt);
+}
+
+@media (min-width: 1024px) {
+  .navigation {
+    width: 800px;
+    margin: 0 auto;
+  }
 }

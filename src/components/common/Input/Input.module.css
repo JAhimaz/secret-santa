@@ -1,0 +1,28 @@
+.inputContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--foreground);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.inputContainer.focused {
+  box-shadow: 0 0 5px var(--border);
+}
+
+.icon {
+  color: var(--text-alt);
+  margin-right: 0.75rem;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background-color: transparent;
+  color: var(--text);
+  letter-spacing: 0.5px;
+}

@@ -2,9 +2,15 @@
 
 :root {
   /* Colour scheme layout */
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  /* Buttons */
+  --background: #fafafa;
+  --foreground: #ffffff;
+  --highlight: #6259e2;
+  --highlight-hover: #4b43b1;
+  --border: #e5e5e5;
+  --text: #0a0a0a;
+  --text-alt: #8b8b8b;
+  --text-inverse: #f0f0f0;
+
 
   /* Error / Success Messages */
   
@@ -43,16 +49,28 @@ a {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 800px;
+  width: 100%;
   margin: 0 auto;
+  padding: 1rem;
 }
 
 .content-container {
   min-height: calc(100vh - var(--navigation-height));
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+.link {
+  color: var(--highlight);
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: var(--highlight-hover);
+}
+
+
+@media (min-width: 1024px) {
+  .app-container {
+    width: 800px;
+    padding: 0;
   }
 }
