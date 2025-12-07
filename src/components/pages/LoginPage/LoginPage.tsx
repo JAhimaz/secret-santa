@@ -7,10 +7,12 @@ import Input from "@/components/common/Input/Input";
 import Button from "@/components/common/Button/Button";
 import Link from "next/link";
 import Loader from "@/components/common/Loader/Loader";
+import Image from "next/image";
+import { User } from "@supabase/supabase-js";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [user, setUser] = useState<{ email?: string } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [checkForOTP, setCheckForOTP] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -64,36 +66,36 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <span className={styles.title}>SECRET SANTA</span>
-        <div className={styles.loginContainer}>
-        {!checkForOTP && !user && (
-          <>
-          <Input 
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            icon="email"
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={loading}
-          />
-          <Button onClick={(e) => HandleSubmit(e)} disabled={loading || !email}>
-            {loading ? <Loader size={16} /> : "Login"}
-          </Button>
-          {responseMessage && <span className={styles.errorMessage}>{responseMessage}</span>}
-          </>
-        )}
+      <Image src="/images/logo.png" alt="App Logo" width={300} height={300} />
+      <div className={styles.loginContainer}>
+      {!checkForOTP && !user && (
+        <>
+        <Input 
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          icon="email"
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={loading}
+        />
+        <Button onClick={(e) => HandleSubmit(e)} disabled={loading || !email}>
+          {loading ? <Loader size={16} /> : "Login"}
+        </Button>
+        {responseMessage && <span className={styles.errorMessage}>{responseMessage}</span>}
+        </>
+      )}
 
-        {checkForOTP && !user && (
-          <>
-            <span className={styles.infoMessage}>Please check your email for the login link.</span>
-            <span className={styles.returnMessage} onClick={() => {
-              setCheckForOTP(false);
-            }}>
-              Wrong email? Return to login
-            </span>
-          </>
-        )}
-        </div>
+      {checkForOTP && !user && (
+        <>
+          <span className={styles.infoMessage}>Please check your email for the login link.</span>
+          <span className={styles.returnMessage} onClick={() => {
+            setCheckForOTP(false);
+          }}>
+            Wrong email? Return to login
+          </span>
+        </>
+      )}
+      </div>
 
       {user && (
         <div>

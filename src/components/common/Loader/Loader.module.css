@@ -1,7 +1,7 @@
 .loader {
   width: var(--size);
   height: var(--size);
-  border: calc(var(--size) / 8) solid var(--text-inverse);
+  border: calc(var(--size) / 8) solid var(--color);
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;

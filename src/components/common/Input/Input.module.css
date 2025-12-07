@@ -26,3 +26,16 @@
   color: var(--text);
   letter-spacing: 0.5px;
 }
+
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  padding-left: 0.25rem;
+  color: var(--text-alt);
+}
+

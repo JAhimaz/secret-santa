@@ -1,49 +1,16 @@
-// middleware.ts  (project root)
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { createClient } from "./app/lib/supabase/server"
+// proxy.ts
+import type { NextRequest } from "next/server"
+import { updateSession } from "@/app/lib/supabase/proxy"
 
-
-export async function proxy(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-
-  // Public routes that should NOT redirect
-  if (
-    pathname.startsWith("/login") ||
-    pathname.startsWith("/auth/callback") ||
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/favicon") ||
-    pathname.startsWith("/public")
-  ) {
-    return NextResponse.next();
-  }
-
-  const res = NextResponse.next();
-
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    const url = req.nextUrl.clone();
-    url.pathname = "/login";
-    url.searchParams.set("next", pathname);
-    return NextResponse.redirect(url);
-  }
-
-  if(pathname === "/api") {
-    // check if user exists, otherwise dont let the api be called
-    if(!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-  }
-
-  return res;
+export async function proxy(request: NextRequest) {
+  // redirect if no valid session
+  
+  return updateSession(request)
 }
 
-// Run middleware on everything; we decide inside what is public/protected
 export const config = {
-  matcher: ["/(.*)"],
-};
+  matcher: [
+    // run Proxy for “real” app routes; tweak as you like
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
+}
